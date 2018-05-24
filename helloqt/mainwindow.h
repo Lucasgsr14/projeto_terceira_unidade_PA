@@ -16,7 +16,7 @@ public:
     ~MainWindow();
 
 public slots:
-
+    void mataTudo();
 
 private:
     Ui::MainWindow *ui;
