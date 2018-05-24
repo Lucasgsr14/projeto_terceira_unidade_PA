@@ -18,7 +18,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::mataTudo()
-{
+void MainWindow::mataTudo(){
     exit(0);
+}
+
+void MainWindow::copiaTexto(){
+    ui->textBrowser->setText(ui->textEdit->toPlainText());
 }

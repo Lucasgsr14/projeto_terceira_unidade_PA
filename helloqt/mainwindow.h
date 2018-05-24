@@ -17,6 +17,7 @@ public:
 
 public slots:
     void mataTudo();
+    void copiaTexto();
 
 private:
     Ui::MainWindow *ui;
