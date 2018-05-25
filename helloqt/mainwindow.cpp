@@ -11,6 +11,10 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(clicked(bool)),
             this,//ponteiro para o objeto que vai receber a comunicação de sinal (no casa o objeto main window)
             SLOT(mataTudo()));
+    connect(ui->actionQuit,
+            SIGNAL(triggered(bool)),
+            this,
+            SLOT(mataTudo()));
 }
 
 MainWindow::~MainWindow()
