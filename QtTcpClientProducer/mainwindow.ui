@@ -126,7 +126,11 @@
          </widget>
         </item>
         <item>
-         <widget class="QLCDNumber" name="lcdNumberTimming"/>
+         <widget class="QLCDNumber" name="lcdNumberTimming">
+          <property name="value" stdset="0">
+           <double>1.000000000000000</double>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>

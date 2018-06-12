@@ -41,6 +41,7 @@ void MainWindow::tcpConnect(){
   socket->connectToHost(ip, 1234);
   if(socket->waitForConnected(3000)){
     qDebug() << "Connected";
+    qDebug() << ui->labelToChange->textFormat();
     ui->labelToChange->setText("Connected");
   }
   else{
@@ -70,6 +71,7 @@ void MainWindow::stopData(){
     killTimer(idTimer);
     ui->pushButtonStart->setEnabled(true);
     ui->pushButtonStop->setEnabled(false);
+    ui->horizontalSliderTimming->setEnabled(true);
 }
 
 void MainWindow::putData(){
@@ -77,6 +79,7 @@ void MainWindow::putData(){
         idTimer = startTimer((ui->lcdNumberTimming->intValue())*1000);
         ui->pushButtonStart->setEnabled(false);
         ui->pushButtonStop->setEnabled(true);
+        ui->horizontalSliderTimming->setEnabled(false);
 }
 
 void MainWindow::timerEvent(QTimerEvent *e){

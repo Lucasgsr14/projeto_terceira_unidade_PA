@@ -169,6 +169,7 @@ public:
 
         lcdNumberTimming = new QLCDNumber(centralWidget);
         lcdNumberTimming->setObjectName(QStringLiteral("lcdNumberTimming"));
+        lcdNumberTimming->setProperty("value", QVariant(1));
 
         horizontalLayout_3->addWidget(lcdNumberTimming);
 
