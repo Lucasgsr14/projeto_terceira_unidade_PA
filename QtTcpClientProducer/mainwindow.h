@@ -24,10 +24,12 @@ public slots:
   void tcpDisconnect();
   void deslocaSlider();
   void impedeMaiorMenor();
-  void mudaStatus();
+  void stopData();
+  void timerEvent(QTimerEvent *e);
 private:
   Ui::MainWindow *ui;
   QTcpSocket *socket;
+  int idTimer;
 };
 
 #endif // MAINWINDOW_H

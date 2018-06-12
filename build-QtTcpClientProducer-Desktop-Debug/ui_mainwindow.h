@@ -38,7 +38,6 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QGridLayout *gridLayout;
-    QTextBrowser *textBrowser;
     QVBoxLayout *verticalLayout;
     QLineEdit *lineEditIP;
     QHBoxLayout *horizontalLayout_4;
@@ -56,14 +55,14 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_3;
     QSlider *horizontalSliderTimming;
-    QLCDNumber *lcdNumber_3;
+    QLCDNumber *lcdNumberTimming;
     QHBoxLayout *horizontalLayout_5;
     QPushButton *pushButtonStart;
     QSpacerItem *horizontalSpacer_2;
     QPushButton *pushButtonStop;
     QSpacerItem *verticalSpacer;
-    QPushButton *pushButtonPut;
     QLabel *labelToChange;
+    QTextBrowser *textBrowser;
     QMenuBar *menuBar;
     QMenu *menuclientProducer;
     QToolBar *mainToolBar;
@@ -80,11 +79,6 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        textBrowser = new QTextBrowser(centralWidget);
-        textBrowser->setObjectName(QStringLiteral("textBrowser"));
-
-        gridLayout->addWidget(textBrowser, 0, 1, 1, 1);
-
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
@@ -167,14 +161,16 @@ public:
 
         horizontalSliderTimming = new QSlider(centralWidget);
         horizontalSliderTimming->setObjectName(QStringLiteral("horizontalSliderTimming"));
+        horizontalSliderTimming->setMinimum(1);
+        horizontalSliderTimming->setMaximum(5);
         horizontalSliderTimming->setOrientation(Qt::Horizontal);
 
         horizontalLayout_3->addWidget(horizontalSliderTimming);
 
-        lcdNumber_3 = new QLCDNumber(centralWidget);
-        lcdNumber_3->setObjectName(QStringLiteral("lcdNumber_3"));
+        lcdNumberTimming = new QLCDNumber(centralWidget);
+        lcdNumberTimming->setObjectName(QStringLiteral("lcdNumberTimming"));
 
-        horizontalLayout_3->addWidget(lcdNumber_3);
+        horizontalLayout_3->addWidget(lcdNumberTimming);
 
 
         verticalLayout->addLayout(horizontalLayout_3);
@@ -206,15 +202,15 @@ public:
 
         gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
 
-        pushButtonPut = new QPushButton(centralWidget);
-        pushButtonPut->setObjectName(QStringLiteral("pushButtonPut"));
-
-        gridLayout->addWidget(pushButtonPut, 1, 1, 1, 1);
-
         labelToChange = new QLabel(centralWidget);
         labelToChange->setObjectName(QStringLiteral("labelToChange"));
 
         gridLayout->addWidget(labelToChange, 1, 0, 1, 1);
+
+        textBrowser = new QTextBrowser(centralWidget);
+        textBrowser->setObjectName(QStringLiteral("textBrowser"));
+
+        gridLayout->addWidget(textBrowser, 0, 1, 2, 1);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -235,7 +231,7 @@ public:
         retranslateUi(MainWindow);
         QObject::connect(horizontalSliderMin, SIGNAL(valueChanged(int)), lcdNumber, SLOT(display(int)));
         QObject::connect(horizontalSliderMax, SIGNAL(valueChanged(int)), lcdNumber_2, SLOT(display(int)));
-        QObject::connect(horizontalSliderTimming, SIGNAL(valueChanged(int)), lcdNumber_3, SLOT(display(int)));
+        QObject::connect(horizontalSliderTimming, SIGNAL(valueChanged(int)), lcdNumberTimming, SLOT(display(int)));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -253,7 +249,6 @@ public:
         label_3->setText(QApplication::translate("MainWindow", "Timming(s)", Q_NULLPTR));
         pushButtonStart->setText(QApplication::translate("MainWindow", "Start", Q_NULLPTR));
         pushButtonStop->setText(QApplication::translate("MainWindow", "Stop", Q_NULLPTR));
-        pushButtonPut->setText(QApplication::translate("MainWindow", "putData", Q_NULLPTR));
         labelToChange->setText(QString());
         menuclientProducer->setTitle(QApplication::translate("MainWindow", "clientProducer", Q_NULLPTR));
     } // retranslateUi

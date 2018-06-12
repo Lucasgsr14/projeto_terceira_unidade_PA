@@ -8,11 +8,6 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
   socket = new QTcpSocket(this);
   tcpConnect();
-
-  //connect(ui->pushButtonPut,
-  //        SIGNAL(clicked(bool)),
-  //        this,
-  //        SLOT(putData()));
   connect(ui->pushButtonConnect,
           SIGNAL(clicked(bool)),
           this,
@@ -30,13 +25,15 @@ MainWindow::MainWindow(QWidget *parent) :
           this,
           SLOT(impedeMaiorMenor()));
   connect(ui->pushButtonStart,
-          SIGNAL(toggled(bool)),
+          SIGNAL(clicked(bool)),
           this,
           SLOT(putData()));
   connect(ui->pushButtonStop,
-          SIGNAL(toggled(bool)),
+          SIGNAL(clicked(bool)),
           this,
-          SLOT(mudaStatus()));
+          SLOT(stopData()));
+
+
 }
 
 void MainWindow::tcpConnect(){
@@ -58,38 +55,49 @@ void MainWindow::tcpDisconnect(){
 }
 
 void MainWindow::deslocaSlider(){
-    if(ui->horizontalSliderMin->sliderPosition()>=ui->horizontalSliderMax->sliderPosition()){
+    if(ui->horizontalSliderMin->sliderPosition() >= ui->horizontalSliderMax->sliderPosition()){
         ui->horizontalSliderMax->setSliderPosition(ui->horizontalSliderMin->sliderPosition());
     }
 }
 
 void MainWindow::impedeMaiorMenor(){
-    if(ui->horizontalSliderMax->sliderPosition()<ui->horizontalSliderMin->sliderPosition()){
+    if(ui->horizontalSliderMax->sliderPosition() < ui->horizontalSliderMin->sliderPosition()){
         ui->horizontalSliderMin->setSliderPosition(ui->horizontalSliderMax->sliderPosition());
     }
 }
 
-void MainWindow::mudaStatus(){
-   ui->pushButtonStart->setChecked(false);
+void MainWindow::stopData(){
+    killTimer(idTimer);
+    ui->pushButtonStart->setEnabled(true);
+    ui->pushButtonStop->setEnabled(false);
 }
 
 void MainWindow::putData(){
-  QDateTime datetime;
-  QString str;
-  qint64 msecdate;
-  qDebug() << ui->pushButtonStart->isChecked();
-      if(socket->state()== QAbstractSocket::ConnectedState&&!ui->pushButtonStop->isChecked()){
+        QString timeStr;
+        idTimer = startTimer((ui->lcdNumberTimming->intValue())*1000);
+        ui->pushButtonStart->setEnabled(false);
+        ui->pushButtonStop->setEnabled(true);
+}
 
+void MainWindow::timerEvent(QTimerEvent *e){
+    QString str;
+    int max,min;
+    qint64 msecdate;
+
+    min=ui->horizontalSliderMin->sliderPosition();
+    max=ui->horizontalSliderMax->sliderPosition();
+    if(socket->state()== QAbstractSocket::ConnectedState){
         msecdate = QDateTime::currentDateTime().toMSecsSinceEpoch();
-        str = "set "+ QString::number(msecdate) + " " + QString::number(qrand()%35)+"\r\n";
+        qsrand(msecdate);
+        str = "set "+ QString::number(msecdate) + " " + QString::number(qrand()%(max - min) + min)+"\r\n";
+        ui->textBrowser->append(str);
 
-          qDebug() << str;
-          qDebug() << socket->write(str.toStdString().c_str()) << " bytes written";
-          if(socket->waitForBytesWritten(3000)){
+        qDebug() << str;
+        qDebug() << socket->write(str.toStdString().c_str()) << " bytes written";
+        if(socket->waitForBytesWritten(3000)){
             qDebug() << "wrote";
-          }
-
-  }
+        }
+    }
 }
 
 MainWindow::~MainWindow(){

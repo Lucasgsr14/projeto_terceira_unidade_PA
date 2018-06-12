@@ -15,9 +15,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
-     <widget class="QTextBrowser" name="textBrowser"/>
-    </item>
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -117,13 +114,19 @@
         </item>
         <item>
          <widget class="QSlider" name="horizontalSliderTimming">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>5</number>
+          </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLCDNumber" name="lcdNumber_3"/>
+         <widget class="QLCDNumber" name="lcdNumberTimming"/>
         </item>
        </layout>
       </item>
@@ -173,19 +176,15 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="pushButtonPut">
-      <property name="text">
-       <string>putData</string>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="0">
      <widget class="QLabel" name="labelToChange">
       <property name="text">
        <string/>
       </property>
      </widget>
+    </item>
+    <item row="0" column="1" rowspan="2">
+     <widget class="QTextBrowser" name="textBrowser"/>
     </item>
    </layout>
   </widget>
@@ -253,7 +252,7 @@
   <connection>
    <sender>horizontalSliderTimming</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>lcdNumber_3</receiver>
+   <receiver>lcdNumberTimming</receiver>
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
